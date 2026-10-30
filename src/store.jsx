@@ -50,7 +50,7 @@ export function StoreProvider({ children }) {
     const titles = {
       dashboard: "대시보드",
       new: "새 캠페인",
-      detail: "캠페인",
+      detail: "캠페인 설정",
       upload: "자료 업로드",
       analysis: "고객 반응 분석 결과",
       hypotheses: "메시지 가설",

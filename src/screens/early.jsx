@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { campaignPath, GOALS, nextAction, STEPS, ZONES } from "../data";
+import { campaignPath, GOALS, nextAction, stagePath, STEPS, ZONES } from "../data";
 import { useCampaign, useStore } from "../store";
 import { EmptyState, Field, MissingCampaign, PageHeader } from "../ui";
 
@@ -21,7 +21,7 @@ export function Dashboard() {
           const stageIndex = STEPS.indexOf(campaign.stage);
           return (
             <article className="campaign-row" key={campaign.id}>
-              <a className="campaign-hit" href={campaignPath(campaign.id)}>
+              <a className="campaign-hit" href={stagePath(campaign)}>
                 <h2>{campaign.name}</h2>
                 <dl className="meta-grid">
                   <dt>상품명</dt>

@@ -2,7 +2,10 @@ import { useEffect } from "react";
 import { campaignPath, STEPS } from "./data";
 import { useCampaign, useStore } from "./store";
 
+const NAV_STEPS = ["캠페인 설정", ...STEPS];
+
 const SCREEN_STAGE = {
+  detail: "캠페인 설정",
   upload: "분석",
   analysis: "분석",
   quotes: "분석",
@@ -16,10 +19,11 @@ export function StageBar() {
   const campaign = useCampaign();
   const { route } = useStore();
   if (!campaign) return null;
-  const screenStep = SCREEN_STAGE[route.name] || campaign.stage;
+  const screenStep = SCREEN_STAGE[route.name] || "캠페인 설정";
   const campaignIndex = STEPS.indexOf(campaign.stage);
 
   const hrefFor = (step) => {
+    if (step === "캠페인 설정") return campaignPath(campaign.id);
     if (step === "분석") return campaignPath(campaign.id, campaign.analysis ? "analysis" : "upload");
     if (step === "제안") return campaignPath(campaign.id, "hypotheses");
     if (step === "실험") return campaignPath(campaign.id, campaign.experiments.length ? "results" : "experiment");
@@ -33,9 +37,10 @@ export function StageBar() {
         <span>캠페인 상태 {campaign.status}</span>
       </p>
       <nav className="stage" aria-label="캠페인 진행 단계">
-        {STEPS.map((step, index) => {
+        {NAV_STEPS.map((step, index) => {
           const current = step === screenStep;
-          const done = !current && index <= campaignIndex;
+          const reached = STEPS.indexOf(step);
+          const done = !current && (step === "캠페인 설정" || (reached >= 0 && reached <= campaignIndex));
           return (
             <a
               key={step}
@@ -43,7 +48,7 @@ export function StageBar() {
               className={current ? "is-current" : done ? "is-done" : undefined}
               aria-current={current ? "step" : undefined}
             >
-              <span className="stage-index">{index + 1}</span>
+              <span className="stage-index">{index}</span>
               {step}
             </a>
           );

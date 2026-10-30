@@ -350,6 +350,14 @@ export function campaignPath(id, section, extra) {
   return path;
 }
 
+export function stagePath(campaign) {
+  if (campaign.stage === "분석") return campaignPath(campaign.id, campaign.analysis ? "analysis" : "upload");
+  if (campaign.stage === "제안") return campaignPath(campaign.id, "hypotheses");
+  if (campaign.stage === "실험") return campaignPath(campaign.id, campaign.experiments.length ? "results" : "experiment");
+  if (campaign.stage === "학습") return campaignPath(campaign.id, "learning");
+  return campaignPath(campaign.id);
+}
+
 export function parseHash(hash) {
   const raw = (hash || "#/").replace(/^#/, "");
   const path = raw.split("?")[0];
