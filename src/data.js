@@ -11,9 +11,6 @@ export const FLAG_FIELDS = [
   ["season", "시즌 또는 재고 이슈"],
 ];
 
-export const NEXT_SUGGESTION =
-  "이전 실험에서 민감성·저자극 메시지의 반응이 높았습니다. 다음 캠페인에서는 해당 메시지를 유지하고, ‘무향’ 요소를 추가해 검증해보세요.";
-
 export const CREAM_RESULT_SUMMARY =
   "AI 광고 소재 실험 솔루션 메시지 소재에서 클릭률과 구매 전환율이 함께 개선되었습니다.";
 
@@ -213,96 +210,7 @@ export function creamResultTemplate() {
 }
 
 export function initialLearnings() {
-  return [
-    {
-      id: "l1",
-      title: "민감성·저자극 메시지",
-      result: "개선 신호",
-      basis: "클릭률·구매 전환율 동시 개선",
-      caution: "",
-      nextUse: "민감성 고객 대상 캠페인 우선 추천",
-      when: "2026.09.18 사전 실험",
-      reusable: true,
-      featured: true,
-    },
-    {
-      id: "l2",
-      title: "무향 메시지",
-      result: "차이 없음",
-      basis: "",
-      caution: "메시지 단독 효과 불분명",
-      nextUse: "다른 메시지와 조합해 재검토",
-      when: "2026.08.02 무향 단독 실험",
-      reusable: true,
-      featured: true,
-    },
-    {
-      id: "l3",
-      title: "여름철 산뜻함 메시지",
-      result: "데이터 부족",
-      basis: "",
-      caution: "",
-      nextUse: "추가 집행 후 재판정",
-      when: "2026.07.20 선크림 시즌 실험",
-      reusable: true,
-      featured: true,
-    },
-    {
-      id: "l4",
-      title: "메이크업 전 가벼운 마무리",
-      result: "개선 신호",
-      basis: "오전 시간대 구매 전환율 상승",
-      caution: "",
-      nextUse: "아침 루틴 소재의 첫 문장으로 재사용",
-      when: "2026.06.11",
-      reusable: true,
-      featured: false,
-    },
-    {
-      id: "l5",
-      title: "환절기 당김이 먼저인 사람",
-      result: "개선 신호",
-      basis: "당김을 먼저 말한 소재의 CPA 하락",
-      caution: "",
-      nextUse: "환절기 캠페인 첫 문장으로 재사용",
-      when: "2026.03.28",
-      reusable: true,
-      featured: false,
-    },
-    {
-      id: "l6",
-      title: "피부과 시술 후 일주일",
-      result: "차이 없음",
-      basis: "타깃 규모가 작아 소재 차이가 드러나지 않음",
-      caution: "단독 타깃으로는 표본이 부족",
-      nextUse: "민감 메시지와 묶어 다시 봄",
-      when: "2026.05.02",
-      reusable: true,
-      featured: false,
-    },
-    {
-      id: "l7",
-      title: "가족이 같이 쓰는 무향",
-      result: "개선 신호",
-      basis: "공용 사용 장면에서 저장 수가 늘었음",
-      caution: "",
-      nextUse: "가족 사용 장면에 재사용",
-      when: "2026.04.16",
-      reusable: true,
-      featured: false,
-    },
-    {
-      id: "l8",
-      title: "첫 구매의 따가움 불안",
-      result: "개선 신호",
-      basis: "신규 고객 구매 전환율 개선",
-      caution: "재구매 고객에게는 새 정보가 적음",
-      nextUse: "신규 캠페인에 우선 추천",
-      when: "2026.09.02",
-      reusable: true,
-      featured: false,
-    },
-  ];
+  return [];
 }
 
 export function createCampaigns() {
@@ -318,7 +226,7 @@ export function createCampaigns() {
       stage: "제안",
       target: "민감성 피부를 가진 20~40대 고객",
       updatedAt: "2026.10.29 14:32",
-      linkedLearningId: "l1",
+      linkedLearningId: "",
       fromSample: false,
       files: creamFiles,
       analysis: buildAnalysis(),

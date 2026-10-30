@@ -6,7 +6,6 @@ import {
   emptyFlags,
   FLAG_FIELDS,
   JUDGMENTS,
-  NEXT_SUGGESTION,
 } from "../data";
 import { useCampaign, useStore } from "../store";
 import { EmptyState, EvidenceButton, Field, MissingCampaign, PageHeader } from "../ui";
@@ -365,8 +364,16 @@ export function Results() {
 
 export function Learning() {
   const campaign = useCampaign();
-  const { learnings, createFromLearning } = useStore();
+  const { learnings } = useStore();
   if (!campaign) return <MissingCampaign />;
+
+  if (learnings.length === 0) {
+    return (
+      <EmptyState title="아직 학습 이력이 없습니다">
+        실험 결과를 저장하면 여기에 쌓입니다.
+      </EmptyState>
+    );
+  }
 
   const stories = learnings.filter((item) => item.featured || item.fresh);
   const rest = learnings.filter((item) => !item.featured && !item.fresh);
@@ -376,7 +383,7 @@ export function Learning() {
     <div>
       <PageHeader
         title="다음 광고 가설에 활용할 학습 이력"
-        lede={`${campaign.product} 캠페인에서 보는 기록입니다. 다른 캠페인의 실험도 함께 쌓여 있습니다.`}
+        lede={`${campaign.product} 캠페인에서 저장한 실험 기록입니다.`}
       />
       {fresh ? <div className="banner" role="status"><p>방금 저장한 실험을 학습 이력 맨 위에 넣었습니다.</p></div> : null}
 
@@ -437,34 +444,6 @@ export function Learning() {
           </div>
         </section>
       ) : null}
-
-      <section className="section panel">
-        <div className="section-head">
-          <h2>다음 가설 제안</h2>
-          <EvidenceButton
-            title="다음 가설 제안의 근거"
-            groups={[
-              {
-                label: "이전 실험",
-                items: [
-                  { text: "민감성·저자극 메시지에서 클릭률과 구매 전환율이 함께 개선되었습니다.", source: "2026.09.18 사전 실험", locator: "개선 신호" },
-                  { text: "무향 메시지만 집행했을 때는 기존 소재와 차이가 분명하지 않았습니다.", source: "2026.08.02 무향 단독 실험", locator: "차이 없음" },
-                ],
-              },
-              {
-                label: "고객 원문",
-                items: (campaign.quotes || [])
-                  .filter((quote) => quote.id === "q1" || quote.id === "q2")
-                  .map((quote) => ({ text: quote.text, source: quote.source, locator: quote.locator })),
-              },
-            ]}
-          />
-        </div>
-        <p className="insight">{NEXT_SUGGESTION}</p>
-        <button type="button" className="btn btn-primary" onClick={createFromLearning}>
-          이 가설로 캠페인 만들기
-        </button>
-      </section>
     </div>
   );
 }
