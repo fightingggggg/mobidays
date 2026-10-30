@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useMemo, useRef, useState } from "react";
+import { createContext, useContext, useEffect, useRef, useState } from "react";
 import {
   buildAnalysis,
   buildCreamHypotheses,
@@ -333,23 +333,6 @@ export function StoreProvider({ children }) {
     navigate(campaignPath(id, "hypotheses", "h-next"));
   };
 
-  const metrics = useMemo(() => {
-    const analyzed = campaigns.filter((campaign) => campaign.analysis);
-    const proposed = campaigns.filter((campaign) => campaign.stage === "제안");
-    const active = campaigns.filter((campaign) => campaign.stage !== "학습");
-    const done = campaigns.filter((campaign) => campaign.stage === "학습");
-    return {
-      analyzed: analyzed.length,
-      analyzedId: analyzed[0]?.id || "",
-      proposed: proposed.length,
-      proposedId: proposed[0]?.id || "",
-      active: active.length,
-      activeId: active[0]?.id || "",
-      done: done.length,
-      doneId: done[0]?.id || "",
-    };
-  }, [campaigns]);
-
   const value = {
     campaigns,
     learnings,
@@ -359,7 +342,6 @@ export function StoreProvider({ children }) {
     setBanner,
     toast,
     evidence,
-    metrics,
     navigate,
     pushToast,
     openEvidence: setEvidence,

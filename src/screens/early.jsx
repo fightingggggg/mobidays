@@ -3,19 +3,8 @@ import { campaignPath, GOALS, nextAction, STEPS, ZONES } from "../data";
 import { useCampaign, useStore } from "../store";
 import { EmptyState, Field, MissingCampaign, PageHeader } from "../ui";
 
-function Metric({ href, value, label }) {
-  const body = (
-    <>
-      <b>{value}</b>
-      <span>{label}</span>
-    </>
-  );
-  if (!href) return <div className="metric">{body}</div>;
-  return <a className="metric" href={href}>{body}</a>;
-}
-
 export function Dashboard() {
-  const { campaigns, metrics } = useStore();
+  const { campaigns } = useStore();
   return (
     <div>
       <div className="page-head">
@@ -25,12 +14,6 @@ export function Dashboard() {
         </div>
         <a className="btn btn-primary" href="#/new">새 캠페인 만들기</a>
       </div>
-      <section className="metrics" aria-label="요약 지표">
-        <Metric href={metrics.analyzedId ? campaignPath(metrics.analyzedId, "analysis") : ""} value={metrics.analyzed} label="데이터 분석 완료 캠페인" />
-        <Metric href={metrics.proposedId ? campaignPath(metrics.proposedId, "hypotheses") : ""} value={metrics.proposed} label="가설 제안 캠페인" />
-        <Metric href={metrics.activeId ? campaignPath(metrics.activeId) : ""} value={metrics.active} label="진행 중 캠페인" />
-        <Metric href={metrics.doneId ? campaignPath(metrics.doneId, "learning") : ""} value={metrics.done} label="완료 캠페인" />
-      </section>
       <h2>캠페인</h2>
       <div className="stack" style={{ marginTop: 12 }}>
         {campaigns.map((campaign) => {
@@ -134,7 +117,7 @@ export function CampaignDetail() {
   if (!campaign) return <MissingCampaign />;
   const linked = learnings.find((item) => item.id === campaign.linkedLearningId);
   const pending = campaign.hypotheses.filter((item) => item.status === "승인 대기");
-  const highlights = campaign.analysis?.highlights || [];
+  const needs = campaign.analysis?.needs || [];
 
   return (
     <div>
@@ -194,15 +177,17 @@ export function CampaignDetail() {
       </section>
 
       <section className="section">
-        <h2>현재 핵심 고객 니즈</h2>
-        {highlights.length === 0 ? (
-          <p className="muted" style={{ marginTop: 8 }}>분석을 마치면 고객 니즈가 여기에 표시됩니다.</p>
+        <div className="section-head">
+          <h2>현재 핵심 고객 니즈</h2>
+        </div>
+        {needs.length === 0 ? (
+          <p className="muted">분석을 마치면 고객 니즈가 여기에 표시됩니다.</p>
         ) : (
-          <ul className="plain-list panel" style={{ marginTop: 12 }}>
-            {highlights.map((item) => (
-              <li key={item}>{item}</li>
+          <div className="statement-list panel">
+            {needs.map((item) => (
+              <p key={item}>{item}</p>
             ))}
-          </ul>
+          </div>
         )}
       </section>
 
